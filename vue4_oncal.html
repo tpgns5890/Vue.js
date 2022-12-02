@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@2"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>간단계산기</h1>
+        <input type="number" v-model="first">
+        <input type="number" v-model="second">
+        <button v-on:click="plus">더하기</button><!-- plus-->
+        <button v-on:click="minus">빼기</button>
+        <button v-on:click="multiple">곱하기</button>
+        <button v-on:click="divide">나누기</button>
+        <p>결과는 {{result}}</p>
+
+        <div id="app2">
+            <ul>
+                <li v-for="num in filterNum">{{num}}</li>
+            </ul>
+            <button v-on:click="event1">짝수만 출력</button>
+            <button v-on:click="event2">홀수만 출력</button>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app2',
+            data: {
+                first: 0,
+                second: 0,
+                result: 0,
+                ary: [1, 2, 3, 4, 5, 6, 7, 8],
+                filterAry:[]
+
+            },
+            methods: {
+                plus: function () {
+                    this.result = parseInt(this.first) + parseInt(this.second);
+                },
+                minus: function () {
+                    this.result = parseInt(this.first) - parseInt(this.second);
+                },
+                multiple: function () {
+                    this.result = parseInt(this.first) * parseInt(this.second);
+                },
+                divide: function () {
+                    this.result = parseInt(this.first) / parseInt(this.second);
+                },
+                event1: function () {
+                    this.filterAry=this.ary.filter(function (num) {
+                        if(num%2==0)
+                        return true;
+                    })
+                },
+                event2: function () {
+                    this.filterAry=this.ary.filter(function (num) {
+                        if(num%2==1)
+                        return true;
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

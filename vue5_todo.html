@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@2"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="add">
+            <label for="">name: <input type="text" v-model="iname"></label>
+            <label for="">score: <input type="number" v-model="iscore"></label>
+            <button v-on:click="addMember(iname,iscore)">등록</button>
+        </div>
+        <div class="list">
+            <ul>
+                <li v-for="member in members">이름: {{member.name}}, 점수: {{member.score}} <button v-on:click="delMember(member.name)">삭제</button></li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                members:[
+                    {name: "홍길동", score:80},
+                    {name: "김민수", score:85},
+                    {name: "김익수", score:90}
+                ],
+                iname:"",
+                iscore:0
+            },
+            methods:{
+                addMember: function(name, score){
+                    this.members.push({
+                        name: name,
+                        score: score
+                    })
+                    this.iname="";
+                    this.iscore=0;
+                },
+                delMember: function(name){
+                    let idx = -1;
+                    // for(let i=0; i<this.members.length;i++){
+                    //     if(this.members[i].name == name){
+                    //         idx = i;
+                    //         break
+                    //     }
+                    // }
+                    idx= this.members.reduce(function(acc, curMember, curIdx){
+                        return curMember.name == name ? curIdx : acc;
+                    },-1)
+                    this.members.splice(idx, 1);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

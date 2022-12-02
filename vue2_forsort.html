@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue2_forsort.html</title>
+    <script src="https://unpkg.com/vue@2"></script>
+</head>
+<body>
+    <div id="app">
+        <div v-for="lang in languages">
+            <span>{{lang.id}}, {{lang.title}}</span>
+        </div>
+        <table border="1">
+            <tr>
+                <template v-for="(val, prop) in languages[0]">
+                    <th v-text="prop"></th>
+                </template>
+            </tr>
+            <tr v-for="lang in languages">
+                <td>{{lang.id}}</td>
+                <td>{{lang.title}}</td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var app = new Vue({
+            el:'#app',
+            data:{
+                languages : [
+                    {id:1, title:'Vue.js'},
+                    {id:2, title:'React.js'}
+                ]
+            }
+        });
+
+        app.languages.push({id:3, title:'Javascript'});
+        // app.languages.splice(0,0,{id:4, title:'Java'});
+        // sort(위치, 바꿀갯수(바꿀 갯수가 0이면 추가, 1이면 변경..)), 값)
+        
+        app.languages.splice(0,2,{id:4, title:'Java'},{id:5, title:'test'});
+        //두개를 4,5로 바꿈
+        
+        app.languages.sort(function(first, last){ //첫번째,두번째 비교
+            if(first.id > last.id){
+                return 1; //정렬방식 바꾸려면 1,-1 바꾸면됨
+            } else{
+                return -1;
+            }
+        })
+
+        // let ary = [1,4,2,6,3];
+        // console.log(ary.sort().reverse());
+    </script>
+</body>
+</html>

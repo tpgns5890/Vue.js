@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        let over170 = []
+        for (let i = 0; i < students.length; i++) {
+            if (students[i].height > 170) {
+                over170.push(students[i])
+            }
+        }
+
+        
+        function over170Fnc(student, idx, ary) {
+            if (student.height > 170) {
+                return true;
+            }
+        }
+        function over80Fnc(w)
+        over170 = students.filter(over170Fnc);
+        console.log(over170);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="show">
+        <ul>
+            <li v-for="(val, prop, idx) in obj">{{idx}}: {{prop}} => {{val}}</li>
+        </ul>
+    </div>
+
+    <script>
+        new Vue({
+            el:'#show',
+            data:{
+                fruits:[{
+                    name:"사과",
+                    desc:"청송사과"
+                }]
+            }
+        })
+
+    </script>
+</body>
+</html>
