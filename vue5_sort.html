@@ -1,29 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://unpkg.com/vue@2"></script>
 </head>
-<body>
-    <div>
-        <button>학번순정렬</button>
-        <button>이름순정렬</button>
-        <button>성적순정렬</button>
 
+<body>
+    <div id="app">
+        <button v-on:click="sortId">학번순정렬</button>
+        <button v-on:click="sortName">이름순정렬</button>
+        <button v-on:click="sortScore">성적순정렬</button>
+
+        <select v-model="selectSort" v-on:change="select()">
+            <option disabled>::선택::</option>
+            <option value="1">학번순정렬</option>
+            <option value="2">이름순정렬</option>
+            <option value="3">성적순정렬</option>
+        </select><br>
+
+        <label><input type="radio" v-model="selectSort" value="1" v-on:change="select()">학번순정렬</label>
+        <label><input type="radio" v-model="selectSort" value="2" v-on:change="select()">이름순정렬</label>
+        <label><input type="radio" v-model="selectSort" value="3" v-on:change="select()">성적순정렬</label>
         <ul>
-            <li></li>
+            <li v-for="member in members">학번: {{member.id}}, 이름: {{member.name}}, 성적: {{member.score}}</li>
         </ul>
     </div>
     <script>
-        let members = [
-            {id:101, name:"Hong", score:70},
-            {id:102, name:"Kim", score:80},
-            {id:103, name:"Park", score:95},
-            {id:104, name:"Choi", score:75}
-        ]
-        new Vue();
+        new Vue({
+            el: '#app',
+            data: {
+                value: 0,
+                selectSort:0,
+                members: [
+                    {id: 101, name: "Hong", score: 70},
+                    {id: 102, name: "Kim", score: 80},
+                    {id: 103, name: "Park", score: 95},
+                    {id: 104, name: "Choi", score: 75}
+                ]
+            },
+            methods: {
+                sortId() {
+                    this.members.sort(function (first, last) {
+                        if (first.id > last.id) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    })
+                },
+                sortName() {
+                    this.members.sort(function (first, last) {
+                        if (first.name > last.name) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    })
+                },
+                sortScore() {
+                    this.members.sort(function (first, last) {
+                        if (first.score > last.score) {
+                            return -1;
+                        } else {
+                            return 1;
+                        }
+                    })
+                },
+                select() {
+                    if (this.selectSort == 1) {
+                        return this.sortId();
+                    } else if (this.selectSort == 2) {
+                        return this.sortName();
+                    } else if (this.selectSort == 3) {
+                        return this.sortScore();
+                    }   
+                }
+            }
+        });
     </script>
 </body>
+
 </html>
