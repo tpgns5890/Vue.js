@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>emp.html</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <form>
+            <input type="text">
+            <button type="button" @click="">등록</button>
+        </form>
+        <div v-for="emp in emps">
+            <span v-text="emp.employee_id"></span>,
+            <span v-text="emp.last_name"></span>,
+            <span v-text="emp.first_name"></span>
+            <button type="button">삭제</button>
+        </div>
+    </div>
+    <script>
+        const {
+            createApp
+        } = Vue;
+        createApp({
+            data() {
+                return {
+                    emp:{},
+                    emps: []
+                }
+            },
+            created() {
+                let url = 'http://localhost/myserver/empSelect'
+                fetch(url)
+                    .then(res => res.json())
+                    .then(res => this.emps = res)
+            },
+            methods:{
+                //등록 
+
+                //삭제
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

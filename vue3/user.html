@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>emp.html</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <form>
+            id:<input type="text" v-model="inputId"><br>
+            pw:<input type="text" v-model="inputPw"><br>
+            name:<input type="text" v-model="inputName"><br>
+            role:<input type="text" v-model="inputRole"><br>
+            <button type="button" @click="">등록</button>
+        </form>
+        <div v-for="user in users">
+            <span v-text="user.id"></span>,
+            <span v-text="user.password"></span>,
+            <span v-text="user.name"></span>,
+            <span v-text="user.role"></span>
+            <button type="button">삭제</button>
+        </div>
+    </div>
+    <script>
+        const {
+            createApp
+        } = Vue;
+        createApp({
+            data() {
+                return {
+                    user:{},
+                    users: []
+                }
+            },
+            created() {
+                let url = 'http://localhost/myserver/userSelectAll'
+                fetch(url)
+                    .then(res => res.json())
+                    .then(res => this.users = res)
+            },
+            methods:{
+                //등록 
+
+                //삭제
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

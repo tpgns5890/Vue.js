@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event.html</title>
+    <style>
+        div{
+            padding:20px;
+            border:1px solid blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="diva">a
+        <div id="divb">b
+            <div id="divc">c <a id="naver" href="http://www.naver.com">네이버</a></div>
+        </div>
+    </div>
+    <script>
+        naver.addEventListener("click", function(ev){
+            ev.stopPropagation();   //부모 이벤트 전파 중지
+            let yn = confirm("이동할까요")
+            if(yn){
+                console.log("이동함")
+            }else{
+                console.log("이동안함")
+                ev.preventDefault() //a, submit 원래기능 중지
+            }
+        })
+        diva.addEventListener("click", function(){
+            alert('diva click')
+        })
+        divb.addEventListener("click", function(){
+            alert('divb click')
+        })
+        divc.addEventListener("click", function(ev){
+            ev.stopPropagation();
+            alert('divc click')
+        })
+    </script>
+</body>
+</html>

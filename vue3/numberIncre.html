@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        .active{background-color: blueviolet;}
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            {{number}}
+            <input type="number" v-model="number">
+            <span v-text="number" :class="{active: checked}"></span>
+            <button type="button" @click="incre">증가</button>
+            <button type="button" @click="decre">감소</button>
+        </div>
+    </div>
+    <script>
+        const {
+            createApp
+        } = Vue
+        createApp({
+            data() {
+                return {
+                    checked:true,
+                    number: 0
+                }
+            },
+            methods: {
+                incre() {
+                    this.number++
+                },
+                decre() {
+                    this.number--
+                }
+            }
+        }).mount("#app");
+    </script>
+</body>
+
+</html>
