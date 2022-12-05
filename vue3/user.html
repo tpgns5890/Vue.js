@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>emp.html</title>
+    <title>user.html</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
 </head>
@@ -17,7 +17,7 @@
             pw:<input type="text" v-model="inputPw"><br>
             name:<input type="text" v-model="inputName"><br>
             role:<input type="text" v-model="inputRole"><br>
-            <button type="button" @click="">등록</button>
+            <button type="button" @click="userInsert">등록</button>
         </form>
         <div v-for="user in users">
             <span v-text="user.id"></span>,
@@ -30,24 +30,31 @@
     <script>
         const {
             createApp
-        } = Vue;
+        } = Vue
         createApp({
             data() {
                 return {
                     user:{},
-                    users: []
+                    users: [],
+                    inputPw:'',
+                    inputId:'',
+                    inputName:'',
+                    inputRole:'',
+                }
+            },
+            methods:{
+                userInsert(){
+                    let url =`http://localhost/myserver/userInsert?id=${this.inputid}&password=${this.inputPw}&name=${this.inputName}&role=${this.inputRole}`
+                    fetch(url)
+                    .then(res=>res.json())
+                    .then(res=> this.users.push(res))
                 }
             },
             created() {
-                let url = 'http://localhost/myserver/userSelectAll'
+                let url = `http://localhost/myserver/userSelectAll`
                 fetch(url)
                     .then(res => res.json())
                     .then(res => this.users = res)
-            },
-            methods:{
-                //등록 
-
-                //삭제
             }
         }).mount('#app');
     </script>
