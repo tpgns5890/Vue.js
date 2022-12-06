@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax_promise.html</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="result">
+
+    </div>
+    <script>
+        $.ajax({url: 'http://localhost/myserver/userSelectAll'})
+            .then(res => {
+                for (user of res) {
+                    //result.innerHTML += `<div>${user.id}</div>`
+                    $('#result').append(`<div>${user.id}</div>`)
+                }
+                //첫번째 아이디로 단건조회
+                let id = res[0].id;
+                //프로미스 객체를 리턴해야 then()사용가능
+                return $.ajax({url: 'http://localhost/myserver/userSelect?id=' + id})
+            }).then(res => {
+                result.innerHTML += JSON.stringify(res)
+            }).catch()
+    </script>
+</body>
+
+</html>

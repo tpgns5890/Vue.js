@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>axiox.html</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="result"></div>
+    <script>
+        var url ='http://localhost/myserver/userSelect'
+        axios.get(url, {params: {id:'test'}})
+        .then(res => {result.innerHTML += JSON.stringify(res.data)})
+    </script>
+</body>
+</html>

@@ -1,93 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-</head>
-
-<body>
-    <div id="app">
+<template>
+  <div>
         <div id="myDIV" class="header">
             <h2 style="margin:5px">My To Do List</h2>
             <input type="text" id ="myInput" placeholder="Title..." v-model="inputTxt">
             <span class="addBtn" @click="todoInsert">Add</span>
         </div>
         <ul id="myUL">
-            <template v-for="(todo,i) in todos">
+            <template v-for="todo in todos" :key="todo.no">
                 <li :class="{checked : todo.todoyn == 1 }" @click="todoUpdate(todo)">{{todo.contents}}
                     <span class="close" @click.stop="todoDelete(todo.no)">X</span>
-                </li> 
+                </li>
             </template>
         </ul>
-    </div>
+  </div>
+</template>
 
-    <script>
-        const {
-            createApp
-        } = Vue
-        createApp({
-            data() {
-                return {
-                    todos: [],
-                    inputTxt: ''
-                }
-            },
-            methods:{
-                todoInsert(){
-                    let url = `http://localhost/myserver/todoInsert?contents=${this.inputTxt}`
-                    fetch(url)
-                    .then(res=>res.json())
-                    .then(res=> this.todos.push(res))
-                },
-                todoUpdate(todo){
-                    let yn = todo.todoyn==0?1:0;
-                    let url =`http://localhost/myserver/todoUpdate?no=${todo.no}&todoyn=${yn}`
-                    fetch(url)
-                    .then(res=>res.json())
-                    .then(res=>{
-                        todo.todoyn = res.todoyn;
-                    })
-                },
-                todoDelete(no){
-                    let url =`http://localhost/myserver/todoDelete?no=${no}`
-                    fetch(url)
-                    .then(res=>res.json())
-                    .then(res=>{
-                        let newtodo =[];
-                        for(todo of this.todos){
-                            if(todo.no != no){
-                                newtodo.push(todo);
-                            }
-                        }
-                        this.todos = newtodo;
-                        //this.todos.splice(i,1) //새 배열에 삭제할 데이터를 제외하고 복사 -> data에 할당
-                    })
-                    //this.todos.splice(no-1,1)
-                    //새 배열에 삭제할 데이터를 제외하고 복사 -> data에 할당
-                    // let newtodo=[];
-                    // for(todo of this.todos){
-                    //     if(todo.no != no){
-                    //         newtodo.push(todo);
-                    //     }
-                    // }
-                    // this.todos = newtodo;
-                }
-            },
-            created() {
-                let url = 'http://localhost/myserver/todoSelect'
-                axios(url)
-                .then(res => {this.todos = res.data})
-            }
-        }).mount('#app')
-    </script>
-    <style>
-        body {
+<script>
+import axios from 'axios'
+export default {
+  name: 'TodoView',
+  data () {
+    return {
+      todo:{},
+      todos: [],
+      inputTxt: ''
+    }
+  },
+  methods:{
+    todoInsert(){
+      let url = `http://localhost/myserver/todoInsert?contents=${this.inputTxt}`
+      fetch(url)
+      .then(res=>res.json())
+      .then(res=> this.todos.push(res))
+    },
+    todoUpdate(todo){
+      let yn = todo.todoyn==0?1:0;
+      let url =`http://localhost/myserver/todoUpdate?no=${todo.no}&todoyn=${yn}`
+      fetch(url)
+      .then(res=>res.json())
+      .then(res=>{
+        todo.todoyn = res.todoyn;
+      })
+    },
+    todoDelete(no){
+      let url =`http://localhost/myserver/todoDelete?no=${no}`
+      fetch(url)
+      .then(res=>res.json())
+      .then(res=>{
+        let newtodo =[];
+        for(let todo of this.todos){
+          if(todo.no != no){
+            newtodo.push(todo);
+          }
+        }
+        this.todos = newtodo;
+        //this.todos.splice(i,1) //새 배열에 삭제할 데이터를 제외하고 복사 -> data에 할당
+      })
+        //this.todos.splice(no-1,1)
+        //새 배열에 삭제할 데이터를 제외하고 복사 -> data에 할당
+        // let newtodo=[];
+        // for(todo of this.todos){
+        //     if(todo.no != no){
+        //         newtodo.push(todo);
+        //     }
+        // }
+        // this.todos = newtodo;
+    }
+  },
+  created() {
+    let url = 'http://localhost/myserver/todoSelect'
+      axios(url)
+      .then(res => {this.todos = res.data})
+  }
+}
+</script>
+
+<style scoped>
+body {
             margin: 0;
             min-width: 250px;
         }
@@ -207,7 +196,4 @@
         .addBtn:hover {
             background-color: #bbb;
         }
-    </style>
-</body>
-
-</html>
+</style>
