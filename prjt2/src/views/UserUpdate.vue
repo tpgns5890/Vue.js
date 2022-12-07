@@ -1,10 +1,10 @@
 <template>
   <form>
-    id:<input type="text" v-model="user.id"><br>
+    id:<input type="text" v-model="user.id" readonly><br>
     pw:<input type="text" v-model="user.password"><br>
     name:<input type="text" v-model="user.name"><br>
     role:<input type="text" v-model="user.role"><br>
-    <button type="button" @click="userInsert">등록</button>
+    <button type="button" @click="userInsert">수정</button>
   </form>
 </template>
 
@@ -21,12 +21,18 @@ export default {
             }
         }
     },
+    created(){
+        let url = 'http://localhost/myserver/userSelect?id='+this.$route.query.id
+        fetch(url)
+        .then(res => res.json())
+        .then(res => this.user = res)
+    },
     methods:{
     userInsert(){
-        let url ='http://localhost/myserver/userInsert'
-        axios(url, {params: this.user})
+        let url ='http://localhost/myserver/userUpdate'
+        axios(url, {params:this.user})
         .then(()=> {
-            alert('등록완료');
+            alert('수정완료')
             this.$router.push('/UserView')
         })
     }
